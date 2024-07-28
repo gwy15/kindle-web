@@ -1,0 +1,32 @@
+body {
+  margin    : 0;
+  width     : 100%;
+  text-align: center;
+}
+
+
+#content {
+  /* background-color: red; */
+  text-align: center;
+  margin-top: 100px;
+}
+
+#content p {
+  margin: 0;
+}
+
+#content #temp,
+#content #humid {
+  font-size: 400px;
+  width    : 100%;
+}
+
+#content #temp {
+  /* margin-right : 350px; */
+  margin-bottom: 250px;
+}
+
+#content span.unit {
+  margin-left: 20px;
+  font-size  : 180px;
+}

@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Kindle web</title>
+  <meta charset="UTF-8">
+  <link href="/kindle/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="content">
+    <p id='temp'>24.8<span class="unit">℃</span></p>
+    <p id='humid'>40<span class="unit">%</span></p>
+  </div>
+  <script>
+    window.onerror = function (message, source, line) {
+      document.getElementById('content').textContent =
+        message + '\n\n' + source + '\n\n' + line + '!!!';
+    }
+    var body = document.body;
+    var content = document.getElementById('content');
+    content.style.width = body.innerWidth + 'px';
+    content.style.height = body.innerHeight + 'px';
+  </script>
+</body>
+
+</html>

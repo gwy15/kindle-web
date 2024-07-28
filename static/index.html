@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Kindle web</title>
+  <meta charset="UTF-8">
+  <link href="/kindle/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="content">
+    <p id='temp'>
+      <span class="value">??</span>
+      <span class="unit">℃</span>
+    </p>
+    <p id="temp-time"></p>
+    <p id="spacer"></p>
+    <p id='humid'>
+      <span class="value">??</span>
+      <span class="unit">%</span>
+    </p>
+    <p id="humid-time"></p>
+    </p>
+  </div>
+  <script>
+    window.onerror = function (message, source, line) {
+      document.getElementById('content').textContent =
+        message + '\n\n' + source + '\n\n' + line + '!!!';
+    }
+    var body = document.body;
+    var content = document.getElementById('content');
+    content.style.width = body.innerWidth + 'px';
+    content.style.height = body.innerHeight + 'px';
+    var temp = document.getElementById('temp').getElementsByClassName('value')[0];
+    var humid = document.getElementById('humid').getElementsByClassName('value')[0];
+    var temp_time = document.getElementById('temp-time');
+    var humid_time = document.getElementById('humid-time')
+
+    function String(s) {
+      return "" + s
+    }
+    function padStart(s, len, pad) {
+      while (s.length < len) {
+        s = pad + s;
+      }
+      return s; 
+    }
+
+    function formatUTC8Date(date) {
+      const utc8Offset = 8 * 60; // UTC+8时区偏移量为+8小时，即8 * 60分钟
+      const offsetDiff = (utc8Offset) * 60 * 1000; // 计算本地时区到UTC+8时区的毫秒差值
+
+      const utc8Date = new Date(date.getTime() + offsetDiff);
+
+      const year = utc8Date.getUTCFullYear();
+      const month = padStart(String(utc8Date.getUTCMonth() + 1), 2, '0');
+      const day = padStart(String(utc8Date.getUTCDate()), 2, '0');
+      const hours = padStart(String(utc8Date.getUTCHours()), 2, '0');
+      const minutes = padStart(String(utc8Date.getUTCMinutes()), 2, '0');
+      const seconds = padStart(String(utc8Date.getUTCSeconds()), 2, '0');
+      return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+    }
+
+    function getData() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/kindle/data', true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          temp.innerText = response.temp;
+          humid.innerText = response.humid;
+          temp_time.innerText = formatUTC8Date(new Date(response.temp_time));
+          humid_time.innerText = formatUTC8Date(new Date(response.humid_time));
+        }
+      };
+      xhr.send();
+    }
+    getData();
+    setInterval(getData, 60 * 1000);
+  </script>
+</body>
+
+</html>

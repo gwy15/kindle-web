@@ -6,7 +6,6 @@ body {
 
 
 #content {
-  /* background-color: red; */
   text-align: center;
   margin-top: 100px;
 }
@@ -17,16 +16,18 @@ body {
 
 #content #temp,
 #content #humid {
-  font-size: 400px;
-  width    : 100%;
+  font-size   : 380px;
 }
 
-#content #temp {
-  /* margin-right : 350px; */
+#content #spacer {
   margin-bottom: 250px;
 }
 
+#content span.value {
+  margin: 0;
+}
+
 #content span.unit {
-  margin-left: 20px;
+  margin-left: 0px;
   font-size  : 180px;
 }

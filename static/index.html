@@ -8,29 +8,29 @@
 </head>
 
 <body>
+  <span id="msg"></span>
   <div id="content">
-    <p id='temp'>
-      <span class="value">??</span>
-      <span class="unit">℃</span>
-    </p>
-    <p id="temp-time"></p>
-    <p id="spacer"></p>
-    <p id='humid'>
-      <span class="value">??</span>
-      <span class="unit">%</span>
-    </p>
-    <p id="humid-time"></p>
+    <div id='temp'>
+      <span class="value">??</span><span class="unit">℃</span>
+    </div>
+    <div id="temp-time" class="time"></div>
+    <div class="spacer"></div>
+    <div id='humid'>
+      <span class="value">??</span><span class="unit">%</span>
+    </div>
+    <div id="humid-time" class="time"></div>
     </p>
   </div>
   <script>
+    var msg = document.getElementById('msg');
     window.onerror = function (message, source, line) {
-      document.getElementById('content').textContent =
-        message + '\n\n' + source + '\n\n' + line + '!!!';
+      msg.textContent = message + '\n\n' + source + '\n\n' + line + '!!!';
+      var err = new Error();
+      if (err.stack) {
+        msg.textContent = message + '\n\n' + source + ':' + line + err.stack;
+      }
     }
-    var body = document.body;
-    var content = document.getElementById('content');
-    content.style.width = body.innerWidth + 'px';
-    content.style.height = body.innerHeight + 'px';
+    // msg.textContent = "w:" + window.innerWidth + "px, h:" + window.innerHeight + "px";
     var temp = document.getElementById('temp').getElementsByClassName('value')[0];
     var humid = document.getElementById('humid').getElementsByClassName('value')[0];
     var temp_time = document.getElementById('temp-time');
@@ -43,7 +43,7 @@
       while (s.length < len) {
         s = pad + s;
       }
-      return s; 
+      return s;
     }
 
     function formatUTC8Date(date) {
